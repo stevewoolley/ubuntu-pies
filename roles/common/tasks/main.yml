@@ -32,11 +32,11 @@
 - name: Set timezone
   become: yes
   community.general.timezone:
-    name: America/New_York
+    name: {{ timezone }}
 - name: Ensure a locale exists
   become: yes
   community.general.locale_gen:
-    name: en_US.UTF-8
+    name: {{ locale }}
     state: present
 - name: set default locale
   become: yes
@@ -45,4 +45,4 @@
   become: yes
   lineinfile: dest=/etc/default/locale
     regexp="LC_ALL"
-    line="LC_ALL=\"en_US.UTF-8\""
+    line="LC_ALL=\"{{ locale }}\""

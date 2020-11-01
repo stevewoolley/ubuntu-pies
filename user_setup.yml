@@ -1,0 +1,12 @@
+---
+- hosts: workers
+  user: swoolley
+  roles:
+    - user_zsh
+    - pyenv
+
+- hosts: controllers
+  user: swoolley
+  roles:
+    - user_zsh
+    - pyenv
