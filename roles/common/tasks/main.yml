@@ -1,0 +1,48 @@
+---
+- name: 'Update and upgrade apt packages'
+  become: yes
+  apt:
+    upgrade: yes
+    update_cache: yes
+    cache_valid_time: 86400
+- name: 'Install common packages'
+  become: yes
+  apt:
+    pkg:
+      - git
+      - zsh
+      - make
+      - build-essential
+      - libssl-dev
+      - zlib1g-dev
+      - libbz2-dev
+      - libreadline-dev
+      - libsqlite3-dev
+      - wget
+      - curl
+      - llvm
+      - libncurses5-dev
+      - libncursesw5-dev
+      - xz-utils
+      - tk-dev
+      - libffi-dev
+      - liblzma-dev
+      - python3
+      - python3-pip
+- name: Set timezone
+  become: yes
+  community.general.timezone:
+    name: America/New_York
+- name: Ensure a locale exists
+  become: yes
+  community.general.locale_gen:
+    name: en_US.UTF-8
+    state: present
+- name: set default locale
+  become: yes
+  command: localectl set-locale LANG=en_US.UTF-8
+- name: set default LC_ALL locale
+  become: yes
+  lineinfile: dest=/etc/default/locale
+    regexp="LC_ALL"
+    line="LC_ALL=\"en_US.UTF-8\""

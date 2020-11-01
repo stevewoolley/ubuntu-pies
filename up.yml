@@ -1,0 +1,10 @@
+---
+- hosts: workers
+  user: swoolley
+  roles:
+    - common
+
+- hosts: controllers
+  user: swoolley
+  roles:
+    - common

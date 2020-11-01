@@ -1,0 +1,16 @@
+all:
+  hosts:
+    pi1:
+      ansible_host: pi1
+    pi2:
+      ansible_host: pi2
+  children:
+    workers:
+      hosts:
+        pi2: {}
+    controllers:
+      hosts:
+        pi1: {}
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+    remote_user: swoolley
