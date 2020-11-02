@@ -1,26 +1,49 @@
+- name: 'Install zsh'
+  become: yes
+  apt:
+    pkg:
+      - zsh
+
 - name: Setup user
   become: yes
   user:
     name: "{{ user }}"
     shell: /usr/bin/zsh
+    createhome: yes
+    comment: "{{ comment }}"
+    groups: adm,sudo
+
 - name: 'setup oh-my-zsh'
+  become: yes
   git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git
     dest: /home/{{ user }}/.oh-my-zsh
+
 - name: 'set permissions of oh-my-zsh'
+  become: yes
   file:
-    path: '~{{ user }}/.oh-my-zsh'
+    path: '/home/{{ user }}/.oh-my-zsh'
     mode: 'go-w'
     recurse: yes
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
 - name: 'write .zshrc'
+  become: yes
   template:
     src: zshrc.j2
-    dest: '~{{ user }}/.zshrc'
+    dest: '/home/{{ user }}/.zshrc'
     backup: yes
     mode: 'u=rw,go=r'
+    owner: "{{ user }}"
+    group: "{{ user }}"
+
 - name: 'write .zshenv'
+  become: yes
   template:
     src: zshenv.j2
-    dest: '~{{ user }}/.zshenv'
+    dest: '/home/{{ user }}/.zshenv'
     backup: yes
     mode: 'u=rw,go=r'
+    owner: "{{ user }}"
+    group: "{{ user }}"
