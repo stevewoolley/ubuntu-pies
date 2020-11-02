@@ -1,0 +1,11 @@
+---
+- hosts: workers
+  user: swoolley
+  roles:
+    - microk8s
+
+- hosts: controllers
+  user: swoolley
+  roles:
+    - microk8s
+    - microk8s_controller

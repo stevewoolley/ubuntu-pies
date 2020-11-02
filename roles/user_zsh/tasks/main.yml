@@ -4,12 +4,9 @@
     name: "{{ user }}"
     shell: /usr/bin/zsh
 - name: 'setup oh-my-zsh'
-  tags:
-    - skip_ansible_lint
-  command: 'git clone -c core.autocrlf=input --depth=1 https://github.com/robbyrussell/oh-my-zsh.git .oh-my-zsh'
-  args:
-    chdir: '~{{ user }}'
-    creates: '~{{ user }}/.oh-my-zsh'
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: /home/{{ user }}/.oh-my-zsh
 - name: 'set permissions of oh-my-zsh'
   file:
     path: '~{{ user }}/.oh-my-zsh'

@@ -1,0 +1,3 @@
+- name: 'enable microk8s '
+  become: yes
+  command: 'microk8s enable dashboard dns storage registry'

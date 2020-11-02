@@ -1,3 +1,19 @@
-- name: Install pyenv
-  command: 'git clone https://github.com/pyenv/pyenv.git ~/.pyenv'
+- stat: path=~/.pyenv
+  register: p
+
+- name: 'install pyenv'
+  git:
+    repo: https://github.com/pyenv/pyenv.git
+    dest: /home/{{ user }}/.pyenv
+  when: p.stat.exists == False
+
+- name: 'install python 3.6.10'
+  command: 'pyenv install 3.6.10'
+  when: p.stat.exists == False
+
+- name: 'install global 3.6.10'
+  command: 'pyenv global 3.6.10'
+  when: p.stat.exists == False
+
+
 
