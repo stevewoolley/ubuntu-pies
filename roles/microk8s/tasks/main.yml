@@ -22,6 +22,6 @@
     path: /var/snap/microk8s/current/args/containerd
     line: '--log-level fatal'
 
-- name: 'add user to microk8s group'
+- name: 'enable microk8s addons'
   become: yes
-  command: 'usermod -a -G microk8s {{ user }}'
+  command: 'microk8s enable dashboard dns storage registry'

@@ -55,15 +55,7 @@ Once it seems the updates have finished, logout, log back in, and the login bann
    ```
    sudo hostnamectl set-hostname NEW_PI
    ```
-1. *OPTIONAL BUT RECOMMENDED:* Create a new user for yourself:
-   ```
-   sudo adduser NEW_USER
-   # you will be prompted for a user password and some (optional) values like Full Name 
-   
-   # Now give your new user the ability to use sudo
-   sudo adduser NEW_USER sudo
-   ```
-1. Reboot may be necessaory
+1. Reboot may be necessary
    ```
    sudo reboot
    ```
@@ -71,11 +63,11 @@ Once it seems the updates have finished, logout, log back in, and the login bann
 1. Enable ssh access without password for install host:
    ```
    # from install host (not new pi)
-   ssh-copy-id NEW_USER@NEW_PI
+   ssh-copy-id ubuntu@NEW_PI
    ```
    Next ssh to the pi:
    ```
-   ssh NEW_USER@NEW_PI
+   ssh ubuntu@NEW_PI
    # This should not require your password
    
    # edit sudoers file
