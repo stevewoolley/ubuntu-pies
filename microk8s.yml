@@ -1,10 +1,10 @@
 ---
 - hosts: workers
-  user: swoolley
+  user: "{{ user }}"
   roles:
     - microk8s
 
 - hosts: controllers
-  user: swoolley
+  user: "{{ user }}"
   roles:
     - microk8s

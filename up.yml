@@ -1,12 +1,12 @@
 ---
 - hosts: workers
-  user: swoolley
+  user: "{{ user }}"
   roles:
     - common
     - rpi_leds
 
 - hosts: controllers
-  user: swoolley
+  user: "{{ user }}"
   roles:
     - common
     - rpi_leds
