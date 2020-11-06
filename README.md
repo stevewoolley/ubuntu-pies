@@ -66,7 +66,7 @@ Once it seems the updates have finished, logout, log back in, and the login bann
 
 # Notes
 
-##Turn on some key addons
+## Turn on some key addons
 ```bash
 microk8s dns storage ingress
 # recommend restart after installing any addons: microk8s stop;microk8s start
@@ -76,7 +76,7 @@ microk8s dns storage ingress
 microk8s stop;microk8s start
 ```
 
-##Turn on dashboard
+## Turn on dashboard
 ```bash
 microk8s enable dashboard
 ```
@@ -84,7 +84,7 @@ microk8s enable dashboard
 ```bash
 microk8s stop;microk8s start
 ```
-####By the book
+#### By the book
 Supposedly the following executed on controller allow you to get a token you can use to log into the dashboard:
 ```bash
 token=$(microk8s kubectl -n kube-system get secret | grep default-token | cut -d " " -f1)
@@ -92,7 +92,7 @@ microk8s kubectl -n kube-system describe secret $token
 ```
 It generates a token but when I supplied the token on the dashboard, 
 it responded with no errors BUT did not redirect to dashboard.
-####Workaround
+#### Workaround
 So since the cluster runs on local network AND I will start/stop dashboard only when needed,
 I bypassed authentication on dashboard by running this on the controller:
 ```bash
@@ -109,16 +109,16 @@ This puts you into edit mode. Make the folling edits:
         image: kubernetesui/dashboard:v2.0.0
 ```
 
-####Start dashboard with proxy to access the dashboard from outside localhost
+#### Start dashboard with proxy to access the dashboard from outside localhost
 ```bash
 microk8s.kubectl proxy --accept-hosts=.* --address=0.0.0.0 &
 ```
-####Your browser *should* be able to reach dashboard now:
+#### Your browser *should* be able to reach dashboard now:
 ```http request
 http://UBUNTU_IP:8001/api/v1/namespaces/kube-system/services/https:kubernetes-dashboard:/proxy/
 ```
 
-##Add cluster node
+## Add cluster node
 ```bash
 microk8s add-node
 ```
@@ -138,7 +138,7 @@ sudo snap alias microk8s.kubectl kubectl
 ```
 This will allow you to use just *kubectl* going forward rather than *microk8s.kubectl*.
 
-##Is v1beta1.metrics.k8s.io throwing errors on controller or workers?
+## Is v1beta1.metrics.k8s.io throwing errors on controller or workers?
 ```bash
 kubectl get apiservices
 ```
@@ -152,7 +152,7 @@ microk8s stop;microk8s start
 ```
 *If rash persists, you may need to review NO_PROXY setting in /var/snap/microk8s/current/args/containerd-env.*
 
-##Add clustered nginx
+## Add clustered nginx
 #### Create a deployment (will spin up single pod):
 ```bash
 kubectl create deployment --image nginx pi-nginx
@@ -179,12 +179,12 @@ Verify additional pods are running:
 ```bash
 kubectl get pods
 ```
-####expose the nginx cluster
-#####If using compatible cloud load balancer
+#### expose the nginx cluster
+##### If using compatible cloud load balancer
 ```bash
 kubectl expose deployment pi-nginx --port=80 --type=LoadBalancer
 ```
-#####or expose the port locally
+##### or expose the port locally
 ```bash
 kubectl expose deployment pi-nginx --type=NodePort --port=80
 ```
@@ -203,7 +203,7 @@ kubectl create deployment --image nginx pi-nginx
 ```
 Will then have to re-expose deployment (above).
 
-##Start interactive shell on cluster
+## Start interactive shell on cluster
 For debugging purposes (especially when it comes to DNS issues), you can start an interactive container:
 ```
 kubectl run my-shell --rm -i --tty --image ubuntu -- bash
