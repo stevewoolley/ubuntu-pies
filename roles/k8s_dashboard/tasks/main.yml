@@ -1,0 +1,12 @@
+---
+- name: 'Write dashboard config'
+  become: yes
+  template:
+    src: docker_daemon.yaml.j2
+    dest: '/tmp/docker_daemon.yaml'
+    backup: yes
+    mode: 'u=rw,go=r'
+    owner: "root"
+    group: "root"
+
+

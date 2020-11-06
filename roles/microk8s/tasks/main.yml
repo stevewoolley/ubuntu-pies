@@ -1,15 +1,4 @@
-- name: adjust cmdline.txt for microk8s
-  become: yes
-  replace:
-      path: /boot/firmware/cmdline.txt
-      regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
-      replace: '\1 {{ item }}'
-  with_items:
-    - "cgroup_enable=cpuset"
-    - "cgroup_memory=1"
-    - "cgroup_enable=memory"
-    - "swapaccount=1"
-
+---
 - name: 'install microk8s'
   become: yes
   community.general.snap:
@@ -22,6 +11,13 @@
     path: /var/snap/microk8s/current/args/containerd
     line: '--log-level fatal'
 
-- name: 'enable microk8s addons'
+- name: 'increase frequency of log rotation'
   become: yes
-  command: 'microk8s enable dashboard dns storage registry'
+  template:
+    src: logrotate.conf.j2
+    dest: '/etc/logrotate.conf'
+    backup: yes
+    mode: 'u=rw,go=r'
+    owner: "root"
+    group: "root"
+

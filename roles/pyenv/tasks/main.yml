@@ -1,3 +1,4 @@
+---
 - stat: path= /home/{{ user }}/.pyenv
   register: p
 

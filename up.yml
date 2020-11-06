@@ -1,12 +1,16 @@
 ---
-- hosts: workers
-  user: "{{ user }}"
-  roles:
-    - common
-    - rpi_leds
-
 - hosts: controllers
   user: "{{ user }}"
   roles:
     - common
     - rpi_leds
+    - docker
+    - microk8s
+- hosts: workers
+  user: "{{ user }}"
+  roles:
+    - common
+    - rpi_leds
+    - docker
+    - microk8s
+

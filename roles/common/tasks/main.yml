@@ -5,6 +5,7 @@
     upgrade: yes
     update_cache: yes
     cache_valid_time: 86400
+
 - name: 'Install common packages'
   become: yes
   apt:
@@ -28,20 +29,63 @@
       - liblzma-dev
       - python3
       - python3-pip
-- name: Set timezone
+
+- name: 'Set timezone'
   become: yes
   community.general.timezone:
     name: "{{ timezone }}"
-- name: Ensure a locale exists
+
+- name: 'Ensure a locale exists'
   become: yes
   community.general.locale_gen:
     name: "{{ locale }}"
     state: present
-- name: set default locale
+
+- name: 'Set default locale'
   become: yes
   command: localectl set-locale LANG=en_US.UTF-8
-- name: set default LC_ALL locale
+
+- name: 'Set default LC_ALL locale'
   become: yes
   lineinfile: dest=/etc/default/locale
     regexp="LC_ALL"
     line="LC_ALL=\"{{ locale }}\""
+
+- name: 'Set hostname'
+  become: yes
+  hostname:
+    name: "{{ inventory_hostname_short }}"
+
+- name: 'Adjust cmdline.txt for microk8s'
+  become: yes
+  replace:
+      path: /boot/firmware/cmdline.txt
+      regexp: '^([\w](?!.*\b{{ item }}\b).*)$'
+      replace: '\1 {{ item }}'
+  with_items:
+    - "cgroup_enable=cpuset"
+    - "cgroup_memory=1"
+    - "cgroup_enable=memory"
+    - "swapaccount=1"
+
+- name: 'Reboot the server'
+  tags: reboot
+  become: yes
+  shell: "sleep 5 & reboot"
+  async: 1
+  poll: 0
+
+- name: 'Wait for the reboot and reconnect'
+  wait_for:
+    port: 22
+    host: '{{ (ansible_ssh_host|default(ansible_host))|default(inventory_hostname) }}'
+    search_regex: OpenSSH
+    delay: 10
+    timeout: 60
+  connection: local
+
+- name: 'Check the Uptime of the servers'
+  shell: "uptime"
+  register: Uptime
+
+- debug: var=Uptime

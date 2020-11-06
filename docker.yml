@@ -1,0 +1,10 @@
+---
+- hosts: workers
+  user: "{{ user }}"
+  roles:
+    - docker
+
+- hosts: controllers
+  user: "{{ user }}"
+  roles:
+    - docker
