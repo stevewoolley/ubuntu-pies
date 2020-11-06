@@ -3,10 +3,9 @@
 Automate install and configure Raspberry Pi with Ubuntu 20.04 LTS 64-bit OS as a Kubernetes cluster.
 At current time, this means only Raspberry Pi 3 and 4 are compatible with the 64-bit OS.
 This will also perform the installs in a headless configuration.
-# Note
+# Steps
 The steps were run on a Mac using Ubuntu imager (to build the prepare the SD card), ssh, and ansible.
 Hopefully these tasks remain OS neutral, but YMMV.
-# Steps
 1. Per the [Raspberry Pi Ubuntu installation instructions](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#1-overview),
 prepare the SD card with [Step #2 Prepare the SD Card](https://ubuntu.com/tutorials/how-to-install-ubuntu-on-your-raspberry-pi#2-prepare-the-sd-card)
 1. If your raspberry pi will only be connected via wifi, keep the SD card mounted to your host.
@@ -175,7 +174,7 @@ Example values used:
 ```
 kubectl autoscale deployment.v1.apps/pi-nginx  --min=2 --max=20 --cpu-percent=80
 ```
-Verify additional pods are running:
+#### Verify additional pods are running:
 ```bash
 kubectl get pods
 ```
