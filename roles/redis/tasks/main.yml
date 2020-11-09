@@ -1,0 +1,16 @@
+---
+- name: 'ensure subdirectory exists'
+  file:
+    path: kubernetes/redis
+    state: directory
+
+- name: 'copy files'
+  copy:
+    src: ./
+    dest: kubernetes/redis
+
+- name: 'kubectl apply'
+  command: kubectl apply -f {{ item }}
+  with_items:
+     - kubernetes/redis/deployment.yaml
+     - kubernetes/redis/service.yaml

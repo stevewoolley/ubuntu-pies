@@ -1,0 +1,17 @@
+---
+- name: 'ensure subdirectory exists'
+  file:
+    path: kubernetes/django
+    state: directory
+
+- name: 'copy files'
+  copy:
+    src: ./
+    dest: kubernetes/django
+
+- name: 'kubectl apply'
+  command: kubectl apply -f {{ item }}
+  with_items:
+     - kubernetes/postgres/job-migration.yaml
+     - kubernetes/postgres/deployment.yaml
+     - kubernetes/postgres/service.yaml

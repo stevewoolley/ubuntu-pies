@@ -1,0 +1,16 @@
+---
+- name: 'ensure subdirectory exists'
+  file:
+    path: kubernetes/celery
+    state: directory
+
+- name: 'copy files'
+  copy:
+    src: ./
+    dest: kubernetes/celery
+
+- name: 'kubectl apply'
+  command: kubectl apply -f {{ item }}
+  with_items:
+     - kubernetes/celery/beat-deployment.yaml
+     - kubernetes/celery/worker-deployment.yaml

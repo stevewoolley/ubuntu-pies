@@ -1,0 +1,20 @@
+---
+- name: 'ensure subdirectory exists'
+  file:
+    path: kubernetes/postgres
+    state: directory
+
+- name: 'copy files'
+  copy:
+    src: ./
+    dest: kubernetes/postgres
+
+- name: 'kubectl apply'
+  command: kubectl apply -f {{ item }}
+  with_items:
+     - kubernetes/postgres/secrets.yaml
+     - kubernetes/postgres/storage_class.yaml
+     - kubernetes/postgres/volume.yaml
+     - kubernetes/postgres/volume_claim.yaml
+     - kubernetes/postgres/deployment.yaml
+     - kubernetes/postgres/service.yaml

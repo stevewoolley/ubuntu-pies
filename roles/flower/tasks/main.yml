@@ -1,0 +1,16 @@
+---
+- name: 'ensure subdirectory exists'
+  file:
+    path: kubernetes/flower
+    state: directory
+
+- name: 'copy files'
+  copy:
+    src: ./
+    dest: kubernetes/flower
+
+- name: 'kubectl apply'
+  command: kubectl apply -f {{ item }}
+  with_items:
+     - kubernetes/flower/deployment.yaml
+     - kubernetes/flower/service.yaml
