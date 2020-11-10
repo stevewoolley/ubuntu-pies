@@ -2,7 +2,6 @@
 - hosts: controllers
   user: "{{ user }}"
   roles:
-    - postgres
     - redis
     - django
     - celery

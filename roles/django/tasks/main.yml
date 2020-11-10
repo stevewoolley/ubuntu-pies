@@ -12,6 +12,6 @@
 - name: 'kubectl apply'
   command: kubectl apply -f {{ item }}
   with_items:
-     - kubernetes/postgres/job-migration.yaml
-     - kubernetes/postgres/deployment.yaml
-     - kubernetes/postgres/service.yaml
+     - kubernetes/django/job-migration.yaml
+     - kubernetes/django/deployment.yaml
+     - kubernetes/django/service.yaml
